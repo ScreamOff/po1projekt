@@ -23,12 +23,7 @@ public:
 
     bool isCollidingWithPaddle(sf::RectangleShape paddle) {
         if (shape.getGlobalBounds().intersects(paddle.getGlobalBounds())) {
-            float ballX = shape.getPosition().x;
-            float paddleX = paddle.getPosition().x;
-            float relativeIntersectX = ballX - paddleX;
-            float angle = (relativeIntersectX / paddle.getSize().x) * 180.f;
-            xVelocity = -5.f * cos(angle * 3.14 / 180.f);
-            yVelocity = -5.f * sin(angle * 3.14 / 180.f);
+            yVelocity = yVelocity * -1+0.05;
             return true;
         }
         return false;
@@ -36,15 +31,7 @@ public:
 
     bool isCollidingWithBlock(sf::RectangleShape block) {
         if (shape.getGlobalBounds().intersects(block.getGlobalBounds())) {
-            sf::Vector2f ballPos = shape.getPosition();
-            sf::Vector2f blockPos = block.getPosition();
-
-            sf::Vector2f blockHalfSize = block.getSize() / 2.f;
-            sf::Vector2f ballRelativePos = ballPos - (blockPos + blockHalfSize);
-
-            float angle = atan2(ballRelativePos.y, ballRelativePos.x);
-            xVelocity = -5.f * cos(angle);
-            yVelocity = -5.f * sin(angle);
+            yVelocity = yVelocity * -1 + 0.05;
 
             return true;
         }
@@ -59,7 +46,7 @@ public:
 
     Paddle(float x, float y) {
         shape.setPosition(x, y);
-        shape.setSize(sf::Vector2f(100.f, 20.f));
+        shape.setSize(sf::Vector2f(100.f, 12.f));
         shape.setFillColor(sf::Color::White);
         shape.setOutlineThickness(1.f);
         shape.setOutlineColor(sf::Color::Black);
