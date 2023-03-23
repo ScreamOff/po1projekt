@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
@@ -8,7 +9,7 @@ class Ball {
 public:
     sf::CircleShape shape;
     float xVelocity = 5.f;
-    float yVelocity = -5.f;
+    float yVelocity = 5.f;
 
     Ball(float radius, sf::Color color) {
         shape.setRadius(radius);
@@ -125,6 +126,10 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
 
 
 void run() {
+  sf::Music music;
+  music.openFromFile("soundTrack.wav");
+  music.play();
+  music.setLoop(true);
     while (window.isOpen()) {
         processEvents();
         update();
@@ -185,7 +190,7 @@ void update() {
         ball.yVelocity = std::abs(ball.yVelocity);
     }
 
-    // Collision with bottom edge
+    // Collision with bottom edge ending
     if (ballPosition.y + ballRadius > windowHeight) {
         window.close();
     }
