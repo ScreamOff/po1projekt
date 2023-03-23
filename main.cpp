@@ -107,7 +107,7 @@ sf::RenderWindow window;
 Paddle paddle;
 std::vector<Block> blocks;
 Ball ball;
-Game() : window(sf::VideoMode(800, 600), "Breakout"),
+Game() : window(sf::VideoMode(860, 600), "Breakout"),
          paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f),
          ball(10.f, sf::Color::Red)
 {
@@ -115,10 +115,10 @@ Game() : window(sf::VideoMode(800, 600), "Breakout"),
 
     ball.shape.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
 
-    sf::Color colors[] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue };
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 10; j++) {
-            blocks.push_back(Block(j * 70.f + 30.f, i * 30.f + 50.f, colors[i]));
+    sf::Color colors[] = { sf::Color::Magenta, sf::Color::Red, sf::Color::Yellow, sf::Color::Green, sf::Color::Cyan, sf::Color::Blue};
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 12; j++) {
+            blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i]));
         }
     }
 }
