@@ -55,7 +55,7 @@ public:
 class Paddle {
 public:
     sf::RectangleShape shape;
-    float speed = 8.f;
+    float speed = 65.f;
 
     Paddle(float x, float y) {
         shape.setPosition(x, y);
