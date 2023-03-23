@@ -163,6 +163,7 @@ void update() {
     for (auto& block : blocks) {
         if (block.isCollidingWithBall(ball)) {
             ball.shape.setFillColor(sf::Color::Blue);
+            ball.isCollidingWithBlock(block.shape);
         }
     }
 
