@@ -166,18 +166,43 @@ void processEvents() {
 
 void update() {
     ball.update();
+
+    // Check collision with paddle
     if (paddle.isCollidingWithBall(ball)) {
         ball.shape.setFillColor(sf::Color::Green);
     }
+
+    // Check collision with blocks
     for (auto& block : blocks) {
         if (block.isCollidingWithBall(ball)) {
             ball.shape.setFillColor(sf::Color::Blue);
         }
     }
-    if (ball.shape.getPosition().y + ball.shape.getRadius() > window.getSize().y) {
+
+    // Check collision with window edges
+    sf::Vector2f ballPosition = ball.shape.getPosition();
+    float ballRadius = ball.shape.getRadius();
+    float windowWidth = window.getSize().x;
+    float windowHeight = window.getSize().y;
+
+    // Collision with left and right edges
+    if (ballPosition.x - ballRadius < 0.f) {
+        ball.xVelocity = std::abs(ball.xVelocity);
+    } else if (ballPosition.x + ballRadius > windowWidth) {
+        ball.xVelocity = -std::abs(ball.xVelocity);
+    }
+
+    // Collision with top edge
+    if (ballPosition.y - ballRadius < 0.f) {
+        ball.yVelocity = std::abs(ball.yVelocity);
+    }
+
+    // Collision with bottom edge
+    if (ballPosition.y + ballRadius > windowHeight) {
         window.close();
     }
 }
+
 
 void render() {
     window.clear();
