@@ -42,10 +42,13 @@ public:
 
 class Paddle {
 public:
+
     sf::RectangleShape shape;
     float speed = 65.f;
+    sf::RenderWindow* window;
 
-    Paddle(float x, float y) {
+    Paddle(float x, float y,sf::RenderWindow& window) {
+        this->window = &window;
         shape.setPosition(x, y);
         shape.setSize(sf::Vector2f(100.f, 12.f));
         shape.setFillColor(sf::Color::White);
@@ -58,12 +61,17 @@ public:
     }
 
     void moveLeft() {
-        shape.move(-speed, 0.f);
-    }
+        if (shape.getPosition().x > 0.f) {  // sprawdzenie, czy nowa pozycja paletki nie wyjdzie poza obszar okna programu
+            shape.move(-speed, 0.f);
+        }
+}
 
     void moveRight() {
-        shape.move(speed, 0.f);
-    }
+        if (shape.getPosition().x + shape.getSize().x < window->getSize().x) {  // sprawdzenie, czy nowa pozycja paletki nie wyjdzie poza obszar okna programu
+            shape.move(speed, 0.f);
+        }
+}
+
 
     bool isCollidingWithBall(Ball& ball) {
         if (ball.shape.getGlobalBounds().intersects(shape.getGlobalBounds())) {
@@ -72,6 +80,7 @@ public:
         }
         return false;
     }
+
 };
 
 class Block {
@@ -109,7 +118,7 @@ Paddle paddle;
 std::vector<Block> blocks;
 Ball ball;
 Game() : window(sf::VideoMode(860, 600), "Breakout"),
-         paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f),
+         paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f,window),
          ball(10.f, sf::Color::Red)
 {
     window.setFramerateLimit(60);
@@ -127,6 +136,7 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
 
 void run() {
   sf::Music music;
+  music.setVolume(1.f);
   music.openFromFile("soundTrack.wav");
   music.play();
   music.setLoop(true);
@@ -194,6 +204,7 @@ void update() {
     if (ballPosition.y + ballRadius > windowHeight) {
         window.close();
     }
+
 }
 
 
