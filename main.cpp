@@ -132,6 +132,41 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
         }
     }
 }
+void waitForEnter()
+{
+    bool enterPressed = false;
+    sf::Font font;
+    font.loadFromFile("arial.ttf");
+    sf::Text text("Press Enter to start", font, 24);
+    text.setFillColor(sf::Color::White);
+    text.setPosition(window.getSize().x / 2 - text.getLocalBounds().width / 2,
+        window.getSize().y / 2 - text.getLocalBounds().height / 2);
+
+    while (!enterPressed)
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+                exit(0);
+            }
+
+            if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.code == sf::Keyboard::Enter)
+                {
+                    enterPressed = true;
+                }
+            }
+        }
+
+        window.clear();
+        window.draw(text);
+        window.display();
+    }
+}
 
 
 void run() {
@@ -140,7 +175,9 @@ void run() {
   music.openFromFile("soundTrack.wav");
   music.play();
   music.setLoop(true);
+  waitForEnter();
     while (window.isOpen()) {
+
         processEvents();
         update();
         render();
