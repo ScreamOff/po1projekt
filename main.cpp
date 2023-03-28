@@ -10,11 +10,15 @@ public:
     sf::CircleShape shape;
     float xVelocity = 5.f;
     float yVelocity = 5.f;
+    sf::SoundBuffer soundBuffer;
+    sf::Sound sound;
 
     Ball(float radius, sf::Color color) {
         shape.setRadius(radius);
         shape.setFillColor(color);
         shape.setOrigin(radius, radius);
+        soundBuffer.loadFromFile("ballSound.wav");
+        sound.setBuffer(soundBuffer);
     }
 
     void update() {
@@ -33,6 +37,7 @@ public:
     bool isCollidingWithBlock(sf::RectangleShape block) {
         if (shape.getGlobalBounds().intersects(block.getGlobalBounds())) {
             yVelocity = yVelocity * -1 + 0.05;
+            sound.play();
 
             return true;
         }
