@@ -96,13 +96,15 @@ class Block {
 public:
     sf::RectangleShape shape;
     bool destroyed = false;
+    int points;
 
-    Block(float x, float y, sf::Color color) {
+    Block(float x, float y, sf::Color color, int points) {
         shape.setPosition(x, y);
         shape.setSize(sf::Vector2f(60.f, 20.f));
         shape.setFillColor(color);
         shape.setOutlineThickness(1.f);
         shape.setOutlineColor(sf::Color::Black);
+        this -> points=points;
     }
 
     void draw(sf::RenderWindow& window) {
@@ -128,8 +130,9 @@ std::vector<Block> blocks;
 Ball ball;
 int score=0;
 sf::Font font;
-
-
+ int k= 6;
+int i =0;
+int j=0;
 
 Game() : window(sf::VideoMode(860, 600), "Breakout"),
          paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f,window),
@@ -141,11 +144,14 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
     font.loadFromFile("ARCADECLASSIC.ttf");
 
     sf::Color colors[] = { sf::Color::Magenta, sf::Color::Red, sf::Color::Yellow, sf::Color::Green, sf::Color::Cyan, sf::Color::Blue};
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 5; i++) {
+        k -= 1;
         for (int j = 0; j < 12; j++) {
-            blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i]));
+            blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i],k));
+
         }
     }
+
 }
 void writePoints(){
 
@@ -236,9 +242,10 @@ void update() {
     // Check collision with blocks
     for (auto& block : blocks) {
         if (block.isCollidingWithBall(ball)) {
-            score++;
+            score += block.points;
             ball.shape.setFillColor(sf::Color::Blue);
             ball.isCollidingWithBlock(block.shape);
+
         }
     }
 
