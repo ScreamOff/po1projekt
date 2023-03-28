@@ -1,3 +1,4 @@
+```
 Object Oriented Programming part 1 Project
 Atari Breakout
 made in SFML https://www.sfml-dev.org/
@@ -10,7 +11,7 @@ Installing SFML for:
 	Macintosh:
 		https://www.sfml-dev.org/tutorials/2.5/start-osx.php
 
-
+```
 
 
 WTFPL
