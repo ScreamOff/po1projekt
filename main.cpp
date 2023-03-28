@@ -152,8 +152,8 @@ void writePoints(){
 
   sf::Text text(to_string(score), font, 24);
   text.setFillColor(sf::Color::White);
-  text.setPosition(window.getSize().x / 2 - text.getLocalBounds().width / 2,
-      window.getSize().y / 2 - text.getLocalBounds().height / 2);
+  text.setPosition(window.getSize().x / 12 - text.getLocalBounds().width / 2,
+      window.getSize().y / 1.10 - text.getLocalBounds().height / 2);
       window.draw(text);
 }
 void waitForEnter()
@@ -236,6 +236,7 @@ void update() {
     // Check collision with blocks
     for (auto& block : blocks) {
         if (block.isCollidingWithBall(ball)) {
+            score++;
             ball.shape.setFillColor(sf::Color::Blue);
             ball.isCollidingWithBlock(block.shape);
         }
