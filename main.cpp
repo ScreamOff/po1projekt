@@ -4,6 +4,10 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <string>
+
+using namespace std;
+
 
 class Ball {
 public:
@@ -122,6 +126,8 @@ sf::RenderWindow window;
 Paddle paddle;
 std::vector<Block> blocks;
 Ball ball;
+int score=0;
+
 Game() : window(sf::VideoMode(860, 600), "Breakout"),
          paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f,window),
          ball(10.f, sf::Color::Red)
@@ -136,6 +142,17 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
             blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i]));
         }
     }
+}
+void writePoints(){
+  sf::Font font;
+
+  font.loadFromFile("arial.ttf");
+
+  sf::Text text(to_string(score), font, 24);
+  text.setFillColor(sf::Color::White);
+  text.setPosition(window.getSize().x / 2 - text.getLocalBounds().width / 2,
+      window.getSize().y / 2 - text.getLocalBounds().height / 2);
+      window.draw(text);
 }
 void waitForEnter()
 {
@@ -253,6 +270,7 @@ void update() {
 void render() {
     window.clear();
     paddle.draw(window);
+    writePoints();
     ball.shape.setFillColor(sf::Color::Red);
     ball.shape.setOutlineThickness(1.f);
     ball.shape.setOutlineColor(sf::Color::Black);
