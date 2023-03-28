@@ -127,6 +127,9 @@ Paddle paddle;
 std::vector<Block> blocks;
 Ball ball;
 int score=0;
+sf::Font font;
+
+
 
 Game() : window(sf::VideoMode(860, 600), "Breakout"),
          paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f,window),
@@ -135,6 +138,7 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
     window.setFramerateLimit(60);
 
     ball.shape.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
+    font.loadFromFile("ARCADECLASSIC.ttf");
 
     sf::Color colors[] = { sf::Color::Magenta, sf::Color::Red, sf::Color::Yellow, sf::Color::Green, sf::Color::Cyan, sf::Color::Blue};
     for (int i = 0; i < 6; i++) {
@@ -144,9 +148,7 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
     }
 }
 void writePoints(){
-  sf::Font font;
 
-  font.loadFromFile("arial.ttf");
 
   sf::Text text(to_string(score), font, 24);
   text.setFillColor(sf::Color::White);
@@ -157,8 +159,6 @@ void writePoints(){
 void waitForEnter()
 {
     bool enterPressed = false;
-    sf::Font font;
-    font.loadFromFile("arial.ttf");
     sf::Text text("Press Enter to start", font, 24);
     text.setFillColor(sf::Color::White);
     text.setPosition(window.getSize().x / 2 - text.getLocalBounds().width / 2,
