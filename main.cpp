@@ -135,6 +135,7 @@ int i=0;
 int j=0;
 unsigned short licznik=0;
 unsigned short mnoznik=1;
+unsigned short rozmiar=100;
 
 Game() : window(sf::VideoMode(860, 600), "Breakout"),
          paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f,window),
@@ -153,7 +154,7 @@ void generuj(){
   for (int i = 0; i <6; i++) {
       k -= 1;
       for (int j = 0; j < 12; j++) {
-          blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i],k));
+          blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i],k*mnoznik));
 
       }
   }
@@ -255,10 +256,15 @@ void update() {
 
         }
     }
-    if(licznik==10){
+    if(licznik==70){
       blocks.clear();
       mnoznik++;
-      k=7*mnoznik;
+      k=7;
+      if(rozmiar >20)
+      {
+          rozmiar -= 20;
+      }
+      paddle.shape.setSize(sf::Vector2f(rozmiar, 12.f));
       generuj();
       licznik=0;
 
