@@ -130,9 +130,11 @@ std::vector<Block> blocks;
 Ball ball;
 int score=0;
 sf::Font font;
- int k= 6;
-int i =0;
+int k=7;
+int i=0;
 int j=0;
+unsigned short licznik=0;
+unsigned short mnoznik=1;
 
 Game() : window(sf::VideoMode(860, 600), "Breakout"),
          paddle(window.getSize().x / 2.f - 50.f, window.getSize().y - 50.f,window),
@@ -143,15 +145,18 @@ Game() : window(sf::VideoMode(860, 600), "Breakout"),
     ball.shape.setPosition(window.getSize().x / 2.f, window.getSize().y / 2.f);
     font.loadFromFile("ARCADECLASSIC.ttf");
 
-    sf::Color colors[] = { sf::Color::Magenta, sf::Color::Red, sf::Color::Yellow, sf::Color::Green, sf::Color::Cyan, sf::Color::Blue};
-    for (int i = 0; i < 5; i++) {
-        k -= 1;
-        for (int j = 0; j < 12; j++) {
-            blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i],k));
 
-        }
-    }
 
+}
+void generuj(){
+  sf::Color colors[] = { sf::Color::Magenta, sf::Color::Red, sf::Color::Yellow, sf::Color::Green, sf::Color::Cyan, sf::Color::Blue};
+  for (int i = 0; i <6; i++) {
+      k -= 1;
+      for (int j = 0; j < 12; j++) {
+          blocks.push_back(Block(j * 70.f + 20.f, i * 30.f + 50.f, colors[i],k));
+
+      }
+  }
 }
 void writePoints(){
 
@@ -204,6 +209,7 @@ void run() {
   music.play();
   music.setLoop(true);
   waitForEnter();
+  generuj();
     while (window.isOpen()) {
 
         processEvents();
@@ -243,10 +249,19 @@ void update() {
     for (auto& block : blocks) {
         if (block.isCollidingWithBall(ball)) {
             score += block.points;
+            licznik++;
             ball.shape.setFillColor(sf::Color::Blue);
             ball.isCollidingWithBlock(block.shape);
 
         }
+    }
+    if(licznik==10){
+      blocks.clear();
+      mnoznik++;
+      k=7*mnoznik;
+      generuj();
+      licznik=0;
+
     }
 
     // Check collision with window edges
